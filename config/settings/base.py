@@ -30,7 +30,7 @@ if READ_DOT_ENV_FILE:
 # APP CONFIGURATION
 # ------------------------------------------------------------------------------
 DJANGO_APPS = [
-    # Default Django apps:
+    # Default Django apps: 기본값으로 있는 것 
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -45,7 +45,7 @@ DJANGO_APPS = [
     'django.contrib.admin',
 ]
 THIRD_PARTY_APPS = [
-    'crispy_forms',  # Form layouts
+    # 인터넷에서 별도로 설치한 것들 
     'allauth',  # registration
     'allauth.account',  # registration
     'allauth.socialaccount',  # registration
@@ -56,6 +56,7 @@ LOCAL_APPS = [
     # custom users app
     'nomadgram2.users.apps.UsersConfig',
     # Your stuff: custom apps go here
+    'nomadgram2.images.apps.ImagesConfig',
 ]
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
