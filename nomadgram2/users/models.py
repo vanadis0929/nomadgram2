@@ -8,6 +8,7 @@ from django.utils.translation import ugettext_lazy as _
 @python_2_unicode_compatible
 class User(AbstractUser):
 
+    """ User Model """ 
     #성별관련 상수 선언
     GENDER_CHOICES = {
         ('male', 'Male'),
@@ -23,6 +24,10 @@ class User(AbstractUser):
     bio = models.TextField(null=True)
     phone = models.CharField(max_length=120,null=True)
     gender = models.CharField(max_length=80, choices=GENDER_CHOICES, null=True)
+
+    #다른모델이 아닌 자신에게 연결하기때문에 self를 사용
+    followers = models.ManyToManyField("self")
+    following = models.ManyToManyField("self")
 
     def __str__(self):
         return self.username
