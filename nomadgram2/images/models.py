@@ -1,49 +1,65 @@
 from django.db import models
-from nomadgram2.users import models as user_models
 from django.utils.encoding import python_2_unicode_compatible
-# Create your models here.
+from taggit.managers import TaggableManager
+from nomadgram2.users import models as user_models
+
 
 @python_2_unicode_compatible
-class TimeStampModel(models.Model):
+class TimeStampedModel(models.Model):
 
-    # 자동으로 날짜가 추가되게끔 처리 
     created_at = models.DateTimeField(auto_now_add=True)
-
-    #모델이 갱신되면 자동으로 새로고침
     updated_at = models.DateTimeField(auto_now=True)
 
-    #abstract 모델임을 하기위해 meta Class를 생성 (db와 연결되지 않는 모델, 다른모델들을 위한 base로 사용 )
     class Meta:
         abstract = True
 
+
 @python_2_unicode_compatible
-class Image(TimeStampModel):
+class Image(TimeStampedModel):
+
     """ Image Model """
-
     file = models.ImageField()
-    location = models.CharField(max_length=140)       
-    caption = models.TextField() 
-    creator = models.ForeignKey(user_models.User, null=True)
+    location = models.CharField(max_length=140)
+    caption = models.TextField()
+    creator = models.ForeignKey(
+        user_models.User, null=True, related_name='images')
+    tags = TaggableManager
 
-    #이미지의 표현법 정의
+    @property
+    def like_count(self):
+        return self.likes.all().count()
+
+    @property
+    def comment_count(self):
+        return self.comments.all().count()
+
     def __str__(self):
-        return '{} = {}'.format(self.location, self.caption )
+        return '{} - {}'.format(self.location, self.caption)
+
+    class Meta:
+        ordering = ['-created_at']
+
 
 @python_2_unicode_compatible
-class Comment(TimeStampModel):
-     """ Comment Model """
-     message = models.TextField()
-     creator = models.ForeignKey(user_models.User, null=True)
-     image = models.ForeignKey(Image, null=True)
+class Comment(TimeStampedModel):
 
-     def __str__(self):
+    """ Comment Model """
+
+    message = models.TextField()
+    creator = models.ForeignKey(user_models.User, null=True)
+    image = models.ForeignKey(Image, null=True, related_name='comments')
+
+    def __str__(self):
         return self.message
 
+
 @python_2_unicode_compatible
-class Like(TimeStampModel):
+class Like(TimeStampedModel):
+
     """ Like Model """
-    creator = models.ForeignKey(user_models.User, null=True)        
-    image = models.ForeignKey(Image, null=True)
+
+    creator = models.ForeignKey(user_models.User, null=True)
+    image = models.ForeignKey(Image, null=True, related_name='likes')
 
     def __str__(self):
-         return 'user: {} -  image caption: {}'.format(self.creator.username, self.image.caption)
+        return 'User: {} - Image Caption: {}'.format(self.creator.username, self.image.caption)

@@ -49,7 +49,8 @@ THIRD_PARTY_APPS = [
     'allauth',  # registration
     'allauth.account',  # registration
     'allauth.socialaccount',  # registration
-    'rest_framework' #장고rest framework (python object < - > JSON)
+    'rest_framework', #장고rest framework (python object < - > JSON),
+    'taggit' # tags for the photos
 ]
 
 # Apps specific for this project go here.
@@ -275,3 +276,4 @@ ADMIN_URL = r'^admin/'
 
 # Your common stuff: Below this line define 3rd party library settings
 # ------------------------------------------------------------------------------
+TAGGIT_CASE_INSENSITIVE = True
