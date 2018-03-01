@@ -23,7 +23,7 @@ class Image(TimeStampedModel):
     caption = models.TextField()
     creator = models.ForeignKey(
         user_models.User, null=True, related_name='images')
-    tags = TaggableManager
+    tags = TaggableManager()
 
     @property
     def like_count(self):
