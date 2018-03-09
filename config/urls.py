@@ -5,6 +5,7 @@ from django.contrib import admin
 from django.views.generic import TemplateView
 from django.views import defaults as default_views
 from rest_framework_jwt.views import obtain_jwt_token
+from nomadgram2 import views
 
 urlpatterns = [
     # Django Admin, use {% url 'admin:index' %}
@@ -18,6 +19,7 @@ urlpatterns = [
     url(r'^notifications/',
         include('nomadgram2.notifications.urls', namespace='notifications')),
     url(r'^accounts/', include('allauth.urls')),
+    url(r'^', views.ReactAppView.as_view()),
 
     # Your stuff: custom urls includes go here
 
