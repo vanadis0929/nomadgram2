@@ -1,31 +1,28 @@
-$bg-color: #f00; 
-
 .App {
   text-align: center;
-  color: $bg-color;
 }
 
-.App__logo {
-  animation: App__logo-spin infinite 20s linear;
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
   height: 80px;
 }
 
-.App__header {
+.App-header {
   background-color: #222;
   height: 150px;
   padding: 20px;
   color: white;
 }
 
-.App__title {
+.App-title {
   font-size: 1.5em;
 }
 
-.App__intro {
+.App-intro {
   font-size: large;
 }
 
-@keyframes App__logo-spin {
+@keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
