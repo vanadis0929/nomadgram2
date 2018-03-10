@@ -14,7 +14,7 @@ class ReactAppView(View):
         except:
             return HttpResponse(
                 """
-                index.html 찾을 수 없을 때
+                index.html 찾을 수 없음 빌드를 하세요
                 """,
                 status=501,
             )
