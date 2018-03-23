@@ -1,0 +1,73 @@
+msgid ""
+msgstr ""
+"Language: ko"
+
+
+#: src/components/AuthForms/index.js
+msgid "Username"
+msgstr "사용자이름"
+
+#: src/components/AuthForms/index.js
+msgid "Password"
+msgstr "비밀번호"
+
+#: src/components/AuthForms/index.js
+msgid "Log In"
+msgstr "로그인"
+
+#: src/components/AuthForms/index.js
+msgid "Log in with Facebook"
+msgstr "페이스북으로 로그인"
+
+#: src/components/AuthForms/index.js
+msgid "Forgot password?"
+msgstr "암호를 잊어버리셨나요?"
+
+#: src/components/AuthForms/index.js
+msgid "Sign up to see photos and videos from your friends."
+msgstr "회원가입해서 친구들의 사진/비디오를 살펴보세요"
+
+#: src/components/AuthForms/index.js
+msgid "Fullname"
+msgstr "풀 네임"
+
+#: src/components/Footer/index.js
+msgid "About Us"
+msgstr "회사소개"
+
+#: src/components/Footer/index.js
+msgid "Support"
+msgstr "지원"
+
+#: src/components/Footer/index.js
+msgid "Blog"
+msgstr "블로그"
+
+#: src/components/Footer/index.js
+msgid "Press"
+msgstr "언론"
+
+#: src/components/Footer/index.js
+msgid "API"
+msgstr "API"
+
+#: src/components/Footer/index.js
+msgid "Jobs"
+msgstr "구직"
+
+#: src/components/Footer/index.js
+msgid "Privacy"
+msgstr "개인정보"
+
+#: src/components/Footer/index.js
+msgid "Terms"
+msgstr "이용약관"
+
+#: src/components/Footer/index.js
+msgid "Directory"
+msgstr "주소록"
+
+#: src/components/Footer/index.js
+msgid "Language"
+msgstr "언어"
+

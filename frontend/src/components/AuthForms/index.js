@@ -1,35 +1,44 @@
 import React from "react";
 import Ionicon from "react-ionicons";
+import PropTypes from "prop-types";
 import styles from "./styles.scss";
 
-export const LoginForm = props => (
+export const LoginForm = (props, context) => (
   <div className={styles.formComponent}>
     <form className={styles.form}>
-      <input type="text" placeholder="Username" className={styles.textInput} />
+      <input
+        type="text"
+        placeholder={context.t("Username")}
+        className={styles.textInput}
+      />
       <input
         type="password"
-        placeholder="Password"
+        placeholder={context.t("Password")}
         className={styles.textInput}
       />
       <button type="submit" className={styles.button}>
-        Log In
+        {context.t("Log In")}
       </button>
     </form>
     <span className={styles.divider}>or</span>
     <button type="button" className={styles.facebookLink}>
-      <Ionicon icon="logo-facebook" fontSize="20px" color="#385185" /> Log in
-      with Facebook
+      <Ionicon icon="logo-facebook" fontSize="20px" color="#385185" />
+      {context.t("Log in with Facebook")}
     </button>
     <button type="button" className={styles.forgotLink}>
-      Forgot password?
+      {context.t("Forgot password?")}
     </button>
   </div>
 );
 
-export const SignupForm = props => (
+LoginForm.contextTypes = {
+  t: PropTypes.func.isRequired
+};
+
+export const SignupForm = (props, context) => (
   <div className={styles.formComponent}>
     <h3 className={styles.signupHeader}>
-      Sign up to see photos and videos from your friends.
+      {context.t("Sign up to see photos and videos from your friends.")}
     </h3>
     <button type="button" className={styles.button}>
       <Ionicon icon="logo-facebook" fontSize="20px" color="#fff" /> Log in with
@@ -38,19 +47,23 @@ export const SignupForm = props => (
     <span className={styles.divider}>or</span>
     <form className={styles.form}>
       <input type="email" placeholder="Email" className={styles.textInput} />
-      <input type="text" placeholder="Full Name" className={styles.textInput} />
       <input
-        type="username"
-        placeholder="Username"
+        type="text"
+        placeholder={context.t("Fullname")}
+        className={styles.textInput}
+      />
+      <input
+        type="text"
+        placeholder={context.t("Username")}
         className={styles.textInput}
       />
       <input
         type="password"
-        placeholder="Password"
+        placeholder={context.t("Password")}
         className={styles.textInput}
       />
       <button type="submit" className={styles.button}>
-        Sign up
+        {context.t("Sign in")}
       </button>
     </form>
     <p className={styles.terms}>
@@ -58,3 +71,7 @@ export const SignupForm = props => (
     </p>
   </div>
 );
+
+SignupForm.contextTypes = {
+  t: PropTypes.func.isRequired
+};
