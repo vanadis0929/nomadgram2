@@ -204,7 +204,7 @@ module.exports = {
                       loader: require.resolve("sass-loader"),
                       options: {
                         sourceMap: true,
-                        data: `@import "../../config/_variables.scss";`
+                        data: `@import "C:/nomadgram2/frontend/src/config/_variables.scss";`
                       }
                     }
                   ]
