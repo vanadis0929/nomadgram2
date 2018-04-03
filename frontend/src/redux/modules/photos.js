@@ -1,10 +1,13 @@
 // imports
 
+import { actionCreators as userActions } from "redux/modules/user";
+
 // actions
 
 // action creators
 
-// api actions
+// API Actions
+
 function getFeed() {
   return (dispatch, getState) => {
     const { user: { token } } = getState();
@@ -13,17 +16,24 @@ function getFeed() {
         Authorization: `JWT ${token}`
       }
     })
-      .then(response => response.json)
+      .then(response => {
+        if (response.status === 401) {
+          dispatch(userActions.logout());
+        }
+        return response.json();
+      })
       .then(json => console.log(json));
   };
 }
 
-// init state
+// Initial State
+
 const initialState = {
   feed: []
 };
 
-// reducer
+// Reducer
+
 function reducer(state = initialState, action) {
   switch (action.type) {
     default:
@@ -31,15 +41,16 @@ function reducer(state = initialState, action) {
   }
 }
 
-// reducer func
+// Reducer Functions
 
-// exports
+// Exports
+
 const actionCreators = {
   getFeed
 };
 
 export { actionCreators };
 
-// default reducer export
+// Export reducer by default
 
 export default reducer;
