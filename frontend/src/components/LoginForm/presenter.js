@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import FacebookLogin from "react-facebook-login";
 import formStyles from "shared/formStyles.scss";
 
-export const LoginForm = (props, context) => (
+const LoginForm = (props, context) => (
   <div className={formStyles.formComponent}>
     <form className={formStyles.form} onSubmit={props.handleSubmit}>
       <input
