@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from . import models, serializers
 from nomadgram2.users import models as user_models
-from nomadgram2.users import serializers as user_serializers  
+from nomadgram2.users import serializers as user_serializers
 from nomadgram2.notifications import views as notification_views
 
 
@@ -34,7 +34,7 @@ class Images(APIView):
         sorted_list = sorted(
             image_list, key=lambda image: image.created_at, reverse=True)
 
-        serializer = serializers.ImageSerializer(sorted_list, many=True)
+        serializer = serializers.ImageSerializer(sorted_list, many=True, context={'request': request})
 
         return Response(serializer.data)
 
@@ -47,12 +47,11 @@ class Images(APIView):
         if serializer.is_valid():
 
             serializer.save(creator=user)
+
             return Response(data=serializer.data, status=status.HTTP_201_CREATED)
 
-        else: 
+        else:
             return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
 
 
 class LikeImage(APIView):
@@ -217,7 +216,7 @@ class ImageDetail(APIView):
         except models.Image.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
-        serializer = serializers.ImageSerializer(image)
+        serializer = serializers.ImageSerializer(image, context={'request': request})
 
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
