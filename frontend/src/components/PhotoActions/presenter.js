@@ -22,7 +22,7 @@ const PhotoActions = (props, context) => (
       </button>
     </div>
     <button type="button" className={styles.likes} onClick={props.openLikes}>
-      {props.number}
+      {props.number}{" "}
       {props.number === 1 ? context.t("like") : context.t("likes")}
     </button>
   </div>

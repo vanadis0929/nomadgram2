@@ -15,6 +15,7 @@
     .header {
       display: flex;
       padding: 14px 0;
+      flex-direction: row-reverse;
       justify-content: center;
       align-items: center;
       border-bottom: 2px solid $light-grey;
@@ -22,18 +23,18 @@
         cursor: pointer;
       }
       .title {
-        order: 1;
-        margin-left: auto;
-        margin-right: auto;
+        flex: 1;
+        text-align: center;
         font-weight: 600;
         font-size: $big-font-size;
+
       }
     }
     .content {
       min-height: 300px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    }
+    .closebutton {
+      margin-left: 10px; 
     }
   }
 }
