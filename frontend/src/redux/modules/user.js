@@ -8,6 +8,7 @@ const LOGOUT = "LOGOUT";
 const SET_USER_LIST = "SET_USER_LIST";
 const FOLLOW_USER = "FOLLOW_USER";
 const UNFOLLOW_USER = "UNFOLLOW_USER";
+const SET_IMAGE_LIST = "SET_IMAGE_LIST";
 
 // action creators
 
@@ -42,6 +43,13 @@ function setUnfollowUser(userId) {
   return {
     type: UNFOLLOW_USER,
     userId
+  };
+}
+
+function setImageList(imageList) {
+  return {
+    type: SET_IMAGE_LIST,
+    imageList
   };
 }
 
@@ -194,6 +202,49 @@ function getExplore() {
   };
 }
 
+function searchByTerm(searchTerm) {
+  return async (dispatch, getState) => {
+    const { user: { token } } = getState();
+    const userList = await searchUsers(token, searchTerm);
+    const imageList = await searchImages(token, searchTerm);
+    if (userList === 401 || imageList === 401) {
+      dispatch(logout());
+    }
+    dispatch(setUserList(userList));
+    dispatch(setImageList(imageList));
+  };
+}
+
+function searchUsers(token, searchTerm) {
+  return fetch(`/users/search/username=${searchTerm}`, {
+    headers: {
+      Authorization: `JWT ${token}`
+    }
+  })
+    .then(response => {
+      if (response.status === 401) {
+        return 401;
+      }
+      return response.json();
+    })
+    .then(json => json);
+}
+
+function searchImages(token, searchTerm) {
+  return fetch(`/users/search/hashtags=${searchTerm}`, {
+    headers: {
+      Authorization: `JWT ${token}`
+    }
+  })
+    .then(response => {
+      if (response.status === 401) {
+        return 401;
+      }
+      return response.json();
+    })
+    .then(json => json);
+}
+
 // initial state
 
 const initialState = {
@@ -215,6 +266,8 @@ function reducer(state = initialState, action) {
       return applyFollowUser(state, action);
     case UNFOLLOW_USER:
       return applyUnfollowUser(state, action);
+    case SET_IMAGE_LIST:
+      return applySetImageList(state, action);
     default:
       return state;
   }
@@ -268,6 +321,14 @@ function applyUnfollowUser(state, action) {
   return { ...state, userList: updatedUserList };
 }
 
+function applySetImageList(state, action) {
+  const { imageList } = action;
+  return {
+    ...state,
+    imageList
+  };
+}
+
 // exports
 
 const actionCreators = {
@@ -278,7 +339,8 @@ const actionCreators = {
   getPhotoLikes,
   followUser,
   unfollowUser,
-  getExplore
+  getExplore,
+  searchByTerm
 };
 
 export { actionCreators };
