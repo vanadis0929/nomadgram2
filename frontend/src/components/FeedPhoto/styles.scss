@@ -1,3 +1,5 @@
+
+
 .feed-photo {
   @include boxBorder(yes);
   width: 100%;
@@ -6,4 +8,48 @@
   &:last-child {
     margin-bottom: 0;
   }
+  header {
+    display: flex;
+    align-items: center; 
+    padding: 10px 10px;
+
+    .bigAvatar {
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      border: 1px solid #ddd;
+      margin-right: 10px;
+      display: block;
+    }
+
+    .headerColumn{
+      display: flex;
+      flex-direction: column;
+      font-size: 16px;
+
+      .creator{
+        font-weight: 700;
+      }
+
+      .location{
+        font-size: 14px; 
+        color: $dark-grey;
+
+      }
+
+
+ 
+    }
+ 
+
+  }
+  .feedImage {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+
+
+
 }

@@ -1,5 +1,4 @@
 // imports
-//import { user } from "redux/modules/user";
 
 // actions
 
@@ -8,6 +7,7 @@ const LOGOUT = "LOGOUT";
 const SET_USER_LIST = "SET_USER_LIST";
 const FOLLOW_USER = "FOLLOW_USER";
 const UNFOLLOW_USER = "UNFOLLOW_USER";
+const SET_EXPLORE = "SET_EXPLORE";
 const SET_IMAGE_LIST = "SET_IMAGE_LIST";
 
 // action creators
@@ -25,13 +25,6 @@ function logout() {
   };
 }
 
-function setUserList(userList) {
-  return {
-    type: SET_USER_LIST,
-    userList
-  };
-}
-
 function setFollowUser(userId) {
   return {
     type: FOLLOW_USER,
@@ -43,6 +36,20 @@ function setUnfollowUser(userId) {
   return {
     type: UNFOLLOW_USER,
     userId
+  };
+}
+
+function setUserList(userList) {
+  return {
+    type: SET_USER_LIST,
+    userList
+  };
+}
+
+function setExplore(userList) {
+  return {
+    type: SET_EXPLORE,
+    userList
   };
 }
 
@@ -187,9 +194,9 @@ function getExplore() {
   return (dispatch, getState) => {
     const { user: { token } } = getState();
     fetch("/users/explore/", {
-      method: "GET",
       headers: {
-        Authorization: `JWT ${token}`
+        Authorization: `JWT ${token}`,
+        "Content-Type": "application/json"
       }
     })
       .then(response => {
@@ -198,7 +205,7 @@ function getExplore() {
         }
         return response.json();
       })
-      .then(json => dispatch(setUserList(json)));
+      .then(json => dispatch(setExplore(json)));
   };
 }
 
@@ -216,9 +223,10 @@ function searchByTerm(searchTerm) {
 }
 
 function searchUsers(token, searchTerm) {
-  return fetch(`/users/search/username=${searchTerm}`, {
+  return fetch(`/users/search/?username=${searchTerm}`, {
     headers: {
-      Authorization: `JWT ${token}`
+      Authorization: `JWT ${token}`,
+      "Content-Type": "application/json"
     }
   })
     .then(response => {
@@ -231,9 +239,10 @@ function searchUsers(token, searchTerm) {
 }
 
 function searchImages(token, searchTerm) {
-  return fetch(`/users/search/hashtags=${searchTerm}`, {
+  return fetch(`/images/search/?hashtags=${searchTerm}`, {
     headers: {
-      Authorization: `JWT ${token}`
+      Authorization: `JWT ${token}`,
+      "Content-Type": "application/json"
     }
   })
     .then(response => {
@@ -258,14 +267,16 @@ function reducer(state = initialState, action) {
   switch (action.type) {
     case SAVE_TOKEN:
       return applySetToken(state, action);
-    case SET_USER_LIST:
-      return applySetUserList(state, action);
     case LOGOUT:
       return applyLogout(state, action);
+    case SET_USER_LIST:
+      return applySetUserList(state, action);
     case FOLLOW_USER:
       return applyFollowUser(state, action);
     case UNFOLLOW_USER:
       return applyUnfollowUser(state, action);
+    case SET_EXPLORE:
+      return applySetExplore(state, action);
     case SET_IMAGE_LIST:
       return applySetImageList(state, action);
     default:
@@ -294,7 +305,10 @@ function applyLogout(state, action) {
 
 function applySetUserList(state, action) {
   const { userList } = action;
-  return { ...state, userList };
+  return {
+    ...state,
+    userList
+  };
 }
 
 function applyFollowUser(state, action) {
@@ -306,7 +320,10 @@ function applyFollowUser(state, action) {
     }
     return user;
   });
-  return { ...state, userList: updatedUserList };
+  return {
+    ...state,
+    userList: updatedUserList
+  };
 }
 
 function applyUnfollowUser(state, action) {
@@ -319,6 +336,14 @@ function applyUnfollowUser(state, action) {
     return user;
   });
   return { ...state, userList: updatedUserList };
+}
+
+function applySetExplore(state, action) {
+  const { userList } = action;
+  return {
+    ...state,
+    userList
+  };
 }
 
 function applySetImageList(state, action) {
