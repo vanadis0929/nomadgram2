@@ -30,6 +30,7 @@ const LoginForm = (props, context) => (
     <FacebookLogin
       appId="2041722169375347"
       fields="name,email,picture"
+      autoLoad={false}
       cssClass={formStyles.facebookLink}
       callback={props.handleFacebookLogin}
       icon="fa-facebook-official"

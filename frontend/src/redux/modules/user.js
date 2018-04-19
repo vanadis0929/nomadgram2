@@ -76,6 +76,7 @@ function facebookLogin(access_token) {
       .then(response => response.json())
       .then(json => {
         if (json.token) {
+          localStorage.setItem("jwt", json.token);
           dispatch(saveToken(json.token));
         }
       })
