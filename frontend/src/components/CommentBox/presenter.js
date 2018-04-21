@@ -6,6 +6,7 @@ import styles from "./styles.scss";
 const CommentBox = (props, context) => (
   <form className={styles.commentBox}>
     <Textarea
+      id="txt_comment"
       className={styles.input}
       placeholder={context.t("Add a comment...")}
       onChange={props.handleInputChange}

@@ -18,7 +18,9 @@ const PhotoActions = (props, context) => (
         )}
       </button>
       <button type="button" className={styles.icon}>
-        <Ionicon icon="ios-text-outline" fontSize="26px" color="black" />
+        <label htmlFor="txt_comment">
+          <Ionicon icon="ios-text-outline" fontSize="26px" color="black" />
+        </label>
       </button>
     </div>
     <button type="button" className={styles.likes} onClick={props.openLikes}>

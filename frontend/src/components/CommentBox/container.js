@@ -21,7 +21,9 @@ class Container extends Component {
     );
   }
   _handleInputChange = event => {
-    const { target: { value } } = event;
+    const {
+      target: { value }
+    } = event;
     this.setState({
       comment: value
     });
