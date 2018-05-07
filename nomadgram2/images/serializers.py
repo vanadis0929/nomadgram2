@@ -33,8 +33,14 @@ class FeedUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = user_models.User
         fields = (
+            'profile_image',
             'username',
-            'profile_image'
+            'name',
+            'bio',
+            'website',
+            'post_count',
+            'followers_count',
+            'following_count',
         )
 
 
@@ -77,14 +83,16 @@ class ImageSerializer(TaggitSerializer, serializers.ModelSerializer):
             'creator',
             'tags',
             'natural_time',
-            'is_liked'
+            'is_liked',
+            'is_vertical'
         )
 
     def get_is_liked(self, obj):
         if 'request' in self.context:
             request = self.context['request']
             try:
-                models.Like.objects.get(creator__id=request.user.id, image__id=obj.id)
+                models.Like.objects.get(
+                    creator__id=request.user.id, image__id=obj.id)
                 return True
             except models.Like.DoesNotExist:
                 return False
@@ -102,10 +110,13 @@ class LikeSerializer(serializers.ModelSerializer):
 
 class InputImageSerializer(serializers.ModelSerializer):
 
+    tags = TagListSerializerField()
+
     class Meta:
         model = models.Image
         fields = (
             'file',
             'location',
             'caption',
+            'tags'
         )

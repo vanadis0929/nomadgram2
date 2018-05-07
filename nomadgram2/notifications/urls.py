@@ -7,5 +7,4 @@ urlpatterns = [
         view=views.Notifications.as_view(),
         name='notifications'
     ),
-
 ]

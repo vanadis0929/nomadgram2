@@ -16,7 +16,7 @@ urlpatterns = [
     url(
         regex=r'^(?P<user_id>[0-9]+)/unfollow/$',
         view=views.UnFollowUser.as_view(),
-        name='follow_user'
+        name='unfollow_user'
     ),
     url(
         regex=r'^(?P<username>\w+)/followers/$',
@@ -34,6 +34,11 @@ urlpatterns = [
         name='user_following'
     ),
     url(
+        regex=r'^push/$',
+        view=views.RegisterPush.as_view(),
+        name='push'
+    ),
+    url(
         regex=r'^(?P<username>\w+)/$',
         view=views.UserProfile.as_view(),
         name='user_profile'
@@ -47,7 +52,5 @@ urlpatterns = [
         regex=r'^login/facebook/$',
         view=views.FacebookLogin.as_view(),
         name='fb_login'
-    ),
-
-
+    )
 ]

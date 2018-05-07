@@ -13,7 +13,8 @@ class ExploreUsers(APIView):
 
         last_five = models.User.objects.all().order_by('-date_joined')[:5]
 
-        serializer = serializers.ListUserSerializer(last_five, many=True, context={"request": request})
+        serializer = serializers.ListUserSerializer(
+            last_five, many=True, context={"request": request})
 
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
@@ -74,7 +75,8 @@ class UserProfile(APIView):
 
             return Response(status=status.HTTP_404_NOT_FOUND)
 
-        serializer = serializers.UserProfileSerializer(found_user)
+        serializer = serializers.UserProfileSerializer(
+            found_user, context={'request': request})
 
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
@@ -152,7 +154,8 @@ class Search(APIView):
 
             users = models.User.objects.filter(username__istartswith=username)
 
-            serializer = serializers.ListUserSerializer(users, many=True, context={"request": request})
+            serializer = serializers.ListUserSerializer(
+                users, many=True, context={"request": request})
 
             return Response(data=serializer.data, status=status.HTTP_200_OK)
 
@@ -165,7 +168,7 @@ class ChangePassword(APIView):
 
     def put(self, request, username, format=None):
 
-        user = request.user 
+        user = request.user
 
         if user.username == username:
 
@@ -195,6 +198,10 @@ class ChangePassword(APIView):
 
                     return Response(status=status.HTTP_400_BAD_REQUEST)
 
+            else:
+
+                return Response(status=status.HTTP_400_BAD_REQUEST)
+
         else:
 
             return Response(status=status.HTTP_400_BAD_REQUEST)
@@ -204,3 +211,22 @@ class FacebookLogin(SocialLoginView):
     adapter_class = FacebookOAuth2Adapter
 
 
+class RegisterPush(APIView):
+
+    def post(self, request):
+
+        user = request.user
+
+        token = request.data.get('token', None)
+
+        if token is not None:
+
+            user.push_token = token
+
+            user.save()
+
+            return Response(status=status.HTTP_200_OK)
+
+        else:
+
+            return Response(status=status.HTTP_400_BAD_REQUEST)

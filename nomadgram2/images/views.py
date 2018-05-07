@@ -34,7 +34,8 @@ class Images(APIView):
         sorted_list = sorted(
             image_list, key=lambda image: image.created_at, reverse=True)
 
-        serializer = serializers.ImageSerializer(sorted_list, many=True, context={'request': request})
+        serializer = serializers.ImageSerializer(
+            sorted_list, many=True, context={'request': request})
 
         return Response(serializer.data)
 
@@ -51,6 +52,7 @@ class Images(APIView):
             return Response(data=serializer.data, status=status.HTTP_201_CREATED)
 
         else:
+            print(serializer.errors)
             return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -64,7 +66,8 @@ class LikeImage(APIView):
 
         users = user_models.User.objects.filter(id__in=like_creators_ids)
 
-        serializer = user_serializers.ListUserSerializer(users, many=True, context={"request": request})
+        serializer = user_serializers.ListUserSerializer(
+            users, many=True, context={'request': request})
 
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
@@ -173,13 +176,17 @@ class Search(APIView):
             images = models.Image.objects.filter(
                 tags__name__in=hashtags).distinct()
 
-            serializer = serializers.CountImageSerializer(images, many=True)
+            serializer = serializers.ImageSerializer(
+                images, many=True, context={'request': request})
 
             return Response(data=serializer.data, status=status.HTTP_200_OK)
 
         else:
 
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+            images = models.Image.objects.all()[:20]
+            serializer = serializers.ImageSerializer(
+                images, many=True, context={'request': request})
+            return Response(data=serializer.data, status=status.HTTP_200_OK)
 
 
 class ModerateComments(APIView):
@@ -216,7 +223,8 @@ class ImageDetail(APIView):
         except models.Image.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
-        serializer = serializers.ImageSerializer(image, context={'request': request})
+        serializer = serializers.ImageSerializer(
+            image, context={'request': request})
 
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
