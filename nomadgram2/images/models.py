@@ -22,10 +22,10 @@ class Image(TimeStampedModel):
 
     """ Image Model """
     file = ProcessedImageField(processors=[
-                                   Transpose()
-                               ],
-                               format='JPEG',
-                               options={'quality': 80})
+        Transpose()
+    ],
+        format='JPEG',
+        options={'quality': 80})
     location = models.CharField(max_length=140)
     caption = models.TextField()
     creator = models.ForeignKey(
