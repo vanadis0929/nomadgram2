@@ -1,6 +1,7 @@
 // imports
 
-// action 정의
+// actions
+
 const SAVE_TOKEN = "SAVE_TOKEN";
 const LOGOUT = "LOGOUT";
 const SET_USER_LIST = "SET_USER_LIST";
