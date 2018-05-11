@@ -1,7 +1,6 @@
 // imports
 
-// actions
-
+// action 정의
 const SAVE_TOKEN = "SAVE_TOKEN";
 const LOGOUT = "LOGOUT";
 const SET_USER_LIST = "SET_USER_LIST";
