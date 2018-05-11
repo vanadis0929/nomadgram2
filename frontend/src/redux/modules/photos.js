@@ -22,13 +22,15 @@ function setFeed(feed) {
 }
 
 function doLikePhoto(photoId) {
+  console.log('doLikePhoto: LIKE_PHOTO type을 가진 reducer를 실행')
   return {
-    type: LIKE_PHOTO,
+    type: LIKE_PHOTO, //해당하는 타입을 찾는다.
     photoId
   };
 }
 
 function doUnlikePhoto(photoId) {
+  console.log('doUnlikePhoto: UNLIKE_PHOTO type을 가진 reducer를 실행')
   return {
     type: UNLIKE_PHOTO,
     photoId
@@ -80,7 +82,9 @@ function getFeed() {
 }
 
 function likePhoto(photoId) {
+  console.log('likePhoto: photoActions의 mapDispatchToProps 에서 보냄')
   return (dispatch, getState) => {
+    console.log('doLikePhoto로 dispatch');
     dispatch(doLikePhoto(photoId));
     const {
       user: {
@@ -99,11 +103,14 @@ function likePhoto(photoId) {
         dispatch(doUnlikePhoto(photoId));
       }
     });
+    console.log('backend에 좋아요 + 카운트 집계 된 값 보냄');
   };
 }
 
 function unlikePhoto(photoId) {
+  console.log('unlikePhoto: photoActions의 mapDispatchToProps 에서 보냄')
   return (dispatch, getState) => {
+    console.log('doUnlikePhoto로 dispatch');
     dispatch(doUnlikePhoto(photoId));
     const {
       user: {
@@ -121,6 +128,7 @@ function unlikePhoto(photoId) {
       } else if (!response.ok) {
         dispatch(doLikePhoto(photoId));
       }
+      console.log('backend에 좋아요 - 카운트 집계 된 값 보냄');
     });
   };
 }
@@ -167,8 +175,10 @@ function reducer(state = initialState, action) {
     case SET_FEED:
       return applySetFeed(state, action);
     case LIKE_PHOTO:
+      console.log('reducer: action.type = LIKE_PHOTO 이므로 applyLikePhoto 함수로 이동')
       return applyLikePhoto(state, action);
     case UNLIKE_PHOTO:
+     console.log('reducer: action.type = UNLIKE_PHOTO 이므로 applyUnlikePhoto 함수로 이동')
       return applyUnlikePhoto(state, action);
     case ADD_COMMENT:
       return applyAddComment(state, action);
@@ -190,12 +200,9 @@ function applySetFeed(state, action) {
 }
 
 function applyLikePhoto(state, action) {
-  const {
-    photoId
-  } = action;
-  const {
-    feed
-  } = state;
+  console.log('applyLikePhoto: is_liked: true / 좋아요 카운트 + 1 누적')
+  const { photoId } = action;
+  const { feed } = state;
   const updatedFeed = feed.map(photo => {
     if (photo.id === photoId) {
       return { ...photo,
@@ -211,6 +218,7 @@ function applyLikePhoto(state, action) {
 }
 
 function applyUnlikePhoto(state, action) {
+  console.log('applyUnlikePhoto: is_liked: false / 좋아요 카운트 - 1 누적')
   const {
     photoId
   } = action;
@@ -257,7 +265,7 @@ function applyAddComment(state, action) {
 
 const actionCreators = {
   getFeed,
-  likePhoto,
+  likePhoto,  
   unlikePhoto,
   commentPhoto
 };

@@ -40,6 +40,7 @@ function setUnfollowUser(userId) {
 }
 
 function setUserList(userList) {
+  console.log('setUserList 실행: SET_USER_LIST type을 보냄.')
   return {
     type: SET_USER_LIST,
     userList
@@ -132,6 +133,7 @@ function createAccount(username, password, email, name) {
 }
 
 function getPhotoLikes(photoId) {
+  console.log('getPhotoLikes: 해당 이미지에 걸린 좋아요 리스트를 가져옴')
   return (dispatch, getState) => {
     const { user: { token } } = getState();
     fetch(`/images/${photoId}/likes/`, {
@@ -146,6 +148,7 @@ function getPhotoLikes(photoId) {
         return response.json();
       })
       .then(json => {
+        console.log('json으로 가져온 데이터를 가지고 setUserList로 dispatch');
         dispatch(setUserList(json));
       });
   };
@@ -271,6 +274,7 @@ function reducer(state = initialState, action) {
     case LOGOUT:
       return applyLogout(state, action);
     case SET_USER_LIST:
+      console.log('action.type = SET_USER_LIST 이므로 applySetUserList 함수 실행')
       return applySetUserList(state, action);
     case FOLLOW_USER:
       return applyFollowUser(state, action);
@@ -305,6 +309,7 @@ function applyLogout(state, action) {
 }
 
 function applySetUserList(state, action) {
+  console.log('applySetUserList: state에 userlist를 반영')
   const { userList } = action;
   return {
     ...state,
