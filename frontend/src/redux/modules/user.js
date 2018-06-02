@@ -135,8 +135,37 @@ function createAccount(username, password, email, name) {
 function getPhotoLikes(photoId) {
   console.log('getPhotoLikes: 해당 이미지에 걸린 좋아요 리스트를 가져옴')
   return (dispatch, getState) => {
-    const { user: { token } } = getState();
+    const {
+      user: {
+        token
+      }
+    } = getState();
     fetch(`/images/${photoId}/likes/`, {
+        headers: {
+          Authorization: `JWT ${token}`
+        }
+      })
+      .then(response => {
+        if (response.status === 401) {
+          dispatch(logout());
+        }
+        return response.json();
+      })
+      .then(json => {
+        console.log('json으로 가져온 데이터를 가지고 setUserList로 dispatch');
+        dispatch(setUserList(json));
+      });
+  };
+}
+
+
+function getPhotoLikesNotification(userId) {
+
+  console.log('getPhotoLikes: 해당 이미지에 걸린 좋아요 리스트를 가져옴')
+  return (dispatch, getState) => {
+    const { user: { token } } = getState();
+    fetch(`/images/${userId}/likes/`, {
+
       headers: {
         Authorization: `JWT ${token}`
       }
@@ -368,6 +397,7 @@ const actionCreators = {
   createAccount,
   logout,
   getPhotoLikes,
+  getPhotoLikesNotification,
   followUser,
   unfollowUser,
   getExplore,

@@ -2,6 +2,7 @@ import React from "react";
 import Ionicon from "react-ionicons";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import Notifications from "components/Notifications";
 import styles from "./styles.scss";
 
 const Navigation = (props, context) => (
@@ -33,9 +34,16 @@ const Navigation = (props, context) => (
             <Ionicon icon="ios-compass-outline" fontSize="28px" color="black" />
           </Link>
         </div>
-        <div className={styles.navIcon}>
-          <Ionicon icon="ios-heart-outline" fontSize="28px" color="black" />
+        <div className={styles.navIcon} onClick={props.openNotifications}>
+          <Ionicon icon="ios-heart-outline" fontSize="28px" color="black"/>
         </div>
+        {
+          props.seeingNotifications && (
+          <Notifications 
+            title={context.t("Likes Nofitications")}
+            closeLikes={props.closeNotifications}
+            userList={props.likes}/>
+        )}        
         <div className={styles.navIcon}>
           <Link to="/profile">
             <Ionicon icon="ios-person-outline" fontSize="32px" color="black" />
@@ -53,7 +61,20 @@ Navigation.contextTypes = {
 Navigation.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onInputChange: PropTypes.func.isRequired,
-  value: PropTypes.string.isRequired
+  value: PropTypes.string.isRequired,
+  seeingNotifications: PropTypes.bool.isRequired,
+  openNotifications: PropTypes.func.isRequired,
+  closeNotifications: PropTypes.func.isRequired,
+  likes: PropTypes.arrayOf(
+    PropTypes.shape({
+      profile_image: PropTypes.string,
+      username: PropTypes.string.isRequired,
+      name: PropTypes.string
+    }).isRequired
+  )
+
+
+
 };
 
 export default Navigation;

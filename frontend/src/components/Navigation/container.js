@@ -4,10 +4,13 @@ import PropTypes from "prop-types";
 
 class Container extends Component {
   state = {
-    term: ""
+    term: "",
+    seeingNotifications: false
   };
   static propTypes = {
-    goToSearch: PropTypes.func.isRequired
+    goToSearch: PropTypes.func.isRequired,
+    getPhotoLikesNotification: PropTypes.func.isRequired
+
   };
   render() {
     const { term } = this.state;
@@ -16,6 +19,10 @@ class Container extends Component {
         onSubmit={this._onSubmit}
         onInputChange={this._onInputChange}
         value={term}
+        {...this.props}
+        {...this.state}
+        openNotifications={this._openNotifications}
+        closeNotifications={this._closeNotifications}        
       />
     );
   }
@@ -34,6 +41,28 @@ class Container extends Component {
       term: ""
     });
   };
+
+ _openNotifications = () => {
+   console.log('_openNotifications: seeingNotifications: true로 getPhotoLikesNotification 함수 실행 ')
+
+
+   const {
+     getPhotoLikesNotification
+   } = this.props;
+
+   this.setState({
+     seeingNotifications: true
+   });
+   getPhotoLikesNotification();
+
+ };
+ _closeNotifications = () => {
+     console.log('_closeNotifications: seeingNotifications: false로 창을 닫음 ')
+
+     this.setState({
+       seeingNotifications: false
+     });
+  }
 }
 
 export default Container;
