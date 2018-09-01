@@ -57,6 +57,8 @@ img {
     border: 0 none;
 }
 
+img { vertical-align: top; max-width: 100%; }
+
 .ButtonWrap {
     display: flex;
     align-items: center;

@@ -1,21 +1,40 @@
 import React, { Fragment } from "react";
 import styled, { injectGlobal } from "styled-components";
 
-const Container = styled.section`
-  border: 1px solid #dfdfdf;
+import UserInfo from "components/UserInfo";
+import FeedPhoto from "components/FeedPhoto";
+
+const Container = styled.div`
+  border: 1px solid #dedede;
   border-radius: 5px;
-  margin-bottom: 60px;
   background-color: #fff;
+  flex: 0 0 640px;
+  display: flex;
+  flex-direction: column;
+`;
+
+const FeedItems = styled.section`
+  position: relative;
+  margin-bottom: 50px;
   &:last-child {
     margin-bottom: 0;
   }
 `;
 
-const Feed = props => {
+const FeedBottom = styled.div`
+  padding: 0 10px;
+`;
+
+const Feed = () => {
   return (
     <Container>
-      <div>feed</div>
+      <FeedItems>
+        <UserInfo />
+        <FeedPhoto />
+        <FeedBottom>aaa</FeedBottom>
+      </FeedItems>
     </Container>
   );
 };
+
 export default Feed;

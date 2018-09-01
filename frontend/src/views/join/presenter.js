@@ -73,7 +73,7 @@ const GotoJoin = styled.div`
   text-align: center;
 `;
 
-const Login = () => {
+const Join = () => {
   return (
     <Fragment>
       <Container>
@@ -116,4 +116,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Join;
